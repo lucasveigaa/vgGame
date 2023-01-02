@@ -10,20 +10,6 @@ for (let i = 0; i < collisions.length; i += 70) {
     collisionsMap.push(collisions.slice(i, 70 + i))
 }
 
-class Boundary {
-    static width = 48
-    static height = 48
-    constructor({ position }) {
-        this.position = position
-        this.width = 48
-        this.height = 48
-    }
-    draw() {
-        c.fillStyle = 'rgba(255, 0, 0, 0)'
-        c.fillRect(this.position.x, this.position.y, this.width, this.height)
-    }
-}
-
 const boundaries = []
 const offset = {
     x: -735,
@@ -48,37 +34,13 @@ collisionsMap.forEach((row, i) => {
 const mapImage = new Image()
 mapImage.src = './imgs/vgTown.png'
 
+//foregroundObjects
+const foregroundImage = new Image()
+foregroundImage.src = './imgs/foregroundObjects.png'
+
 //creating player
 const playerImage = new Image()
 playerImage.src = './imgs/playerDown.png'
-
-class Sprite {
-    constructor({ position, velocity, image, frames = { max: 1 } }) {
-        this.position = position
-        this.image = image
-        this.frames = frames
-        this.image.onload = () => {
-            this.width = this.image.width / this.frames.max
-            this.height = this.image.height
-        }
-    }
-
-    draw() {
-        c.drawImage(
-            this.image,
-            //next four arguments is the cropping of image
-            0,
-            0,
-            this.image.width / this.frames.max,
-            this.image.height,
-            // next four arguments is the actual coordenates and size of image
-            this.position.x,
-            this.position.y,
-            this.image.width / this.frames.max,
-            this.image.height
-        )
-    }
-}
 
 const player = new Sprite({
     // 192 e 68 é o tamanho da imagem do player
@@ -100,6 +62,14 @@ const background = new Sprite({
     image: mapImage,
 })
 
+const foregroundObjects = new Sprite({
+    position: {
+        x: offset.x,
+        y: offset.y,
+    },
+    image: foregroundImage,
+})
+
 const keys = {
     w: {
         pressed: false,
@@ -115,7 +85,7 @@ const keys = {
     },
 }
 
-const movables = [background, ...boundaries]
+const movables = [background, ...boundaries, foregroundObjects]
 
 function rectangularCollision({ player, obstacle }) {
     return (
@@ -136,6 +106,7 @@ function animate() {
         boundary.draw()
     })
     player.draw()
+    foregroundObjects.draw()
 
     let moving = true
     if (keys.w.pressed && lastKey === 'w') {
