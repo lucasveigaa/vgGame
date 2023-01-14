@@ -60,6 +60,13 @@
   <!-- attack bar interface -->
   <div
     style="display: flex; background-color: white; height: 140px; position: absolute; bottom: 0; left: 0; right: 0; border-top: 4px black solid;">
+
+
+    <!-- Dialogue box after sprite attack -->
+    <div id="dialogueBox"
+      style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; background: white; padding: 12px; display: none; cursor: pointer;">
+    </div>
+
     <div style="width: 66.66%; display: grid; grid-template-columns: repeat(2, 1fr);">
       <button>Tackle</button>
       <button>Fireball</button>
@@ -79,3 +86,4 @@
 <script src="data/attacks.js"></script>
 <script src="classes.js"></script>
 <script src="index.js"></script>
+<script src="battleScene.js"></script>
