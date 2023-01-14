@@ -180,6 +180,10 @@ function animate() {
                 //deactivate current animation loop
                 window.cancelAnimationFrame(animationId)
 
+                audio.map.stop()
+                audio.initBattle.play()
+                audio.battle.play()
+
                 battle.initiated = true
                 //Animate flash css like opacity from 0 to 1
                 gsap.to('#overlappingDiv', {
@@ -354,5 +358,13 @@ window.addEventListener('keyup', (e) => {
         case 'd':
             keys.d.pressed = false
             break
+    }
+})
+
+let clicked = false
+addEventListener('click', () => {
+    if (!clicked) {
+        audio.map.play()
+        clicked = true
     }
 })
